@@ -158,15 +158,27 @@ class DNSTapContainer:
 		print('DNSTap created')
 		return
 	
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {dnstap}'.format(
+	# 		dnstap = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {dnstap}'.format(
+	# 		dnstap = self.container_name
+	# 	), shell=True)
+	# 	print('old DNSTap cleaned')
+	# 	return
+
 	def clean(self):
-		subprocess.call('sudo docker stop {dnstap}'.format(
-			dnstap = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {dnstap}'.format(
-			dnstap = self.container_name
-		), shell=True)
-		print('old DNSTap cleaned')
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print('old DNSTap cleaned')
+		else:
+			print('DNSTap container does not exist, skipping')
 	
 	def start(self):
 		exit_code, output = self.container.exec_run(
@@ -822,15 +834,27 @@ class Bind9Container:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {bind9}'.format(
+	# 		bind9 = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {bind9}'.format(
+	# 		bind9 = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old bind9 cleaned'.format(self.unit_num))
+	# 	return
+
 	def clean(self):
-		subprocess.call('sudo docker stop {bind9}'.format(
-			bind9 = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {bind9}'.format(
-			bind9 = self.container_name
-		), shell=True)
-		print('Unit #{} old bind9 cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old bind9 cleaned')
+		else:
+			print(f'Unit #{self.unit_num} bind9 container does not exist, skipping')
 
 	def create(self):
 		global conf_folder_path
@@ -1025,15 +1049,26 @@ class UnboundContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {unbound}'.format(
+	# 		unbound = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {unbound}'.format(
+	# 		unbound = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old unbound cleaned'.format(self.unit_num))
+	# 	return
 	def clean(self):
-		subprocess.call('sudo docker stop {unbound}'.format(
-			unbound = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {unbound}'.format(
-			unbound = self.container_name
-		), shell=True)
-		print('Unit #{} old unbound cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old unbound cleaned')
+		else:
+			print(f'Unit #{self.unit_num} unbound container does not exist, skipping')
 
 	def create(self):
 		global conf_folder_path
@@ -1211,15 +1246,27 @@ class PowerDNSContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {powerdns}'.format(
+	# 		powerdns = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {powerdns}'.format(
+	# 		powerdns = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old powerdns cleaned'.format(self.unit_num))
+	# 	return
+
 	def clean(self):
-		subprocess.call('sudo docker stop {powerdns}'.format(
-			powerdns = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {powerdns}'.format(
-			powerdns = self.container_name
-		), shell=True)
-		print('Unit #{} old powerdns cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old powerdns cleaned')
+		else:
+			print(f'Unit #{self.unit_num} powerdns container does not exist, skipping')
 	
 	def create(self):
 		global conf_folder_path
@@ -1403,15 +1450,27 @@ class KnotContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {knot}'.format(
+	# 		knot = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {knot}'.format(
+	# 		knot = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old knot cleaned'.format(self.unit_num))
+	# 	return
+
 	def clean(self):
-		subprocess.call('sudo docker stop {knot}'.format(
-			knot = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {knot}'.format(
-			knot = self.container_name
-		), shell=True)
-		print('Unit #{} old knot cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old knot cleaned')
+		else:
+			print(f'Unit #{self.unit_num} knot container does not exist, skipping')
 
 	def create(self):
 		global conf_folder_path
@@ -1582,15 +1641,26 @@ class MaraDNSContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {maradns}'.format(
+	# 		maradns = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {maradns}'.format(
+	# 		maradns = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old maradns cleaned'.format(self.unit_num))
+	# 	return
 	def clean(self):
-		subprocess.call('sudo docker stop {maradns}'.format(
-			maradns = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {maradns}'.format(
-			maradns = self.container_name
-		), shell=True)
-		print('Unit #{} old maradns cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old maradns cleaned')
+		else:
+			print(f'Unit #{self.unit_num} maradns container does not exist, skipping')
 	
 	def create(self):
 		global conf_folder_path
@@ -1767,15 +1837,26 @@ class TechnitiumContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {technitium}'.format(
+	# 		technitium = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {technitium}'.format(
+	# 		technitium = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old technitium cleaned'.format(self.unit_num))
+	# 	return
 	def clean(self):
-		subprocess.call('sudo docker stop {technitium}'.format(
-			technitium = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {technitium}'.format(
-			technitium = self.container_name
-		), shell=True)
-		print('Unit #{} old technitium cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old technitium cleaned')
+		else:
+			print(f'Unit #{self.unit_num} technitium container does not exist, skipping')
 
 	def create(self):
 		print('dump folder path:', self.dump_folder)
@@ -2030,15 +2111,26 @@ class AttackerContainer:
 		)
 		return
 
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {attacker}'.format(
+	# 		attacker = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {attacker}'.format(
+	# 		attacker = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old attacker cleaned'.format(self.unit_num))
+	# 	return
 	def clean(self):
-		subprocess.call('sudo docker stop {attacker}'.format(
-			attacker = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {attacker}'.format(
-			attacker = self.container_name
-		), shell=True)
-		print('Unit #{} old attacker cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old attacker cleaned')
+		else:
+			print(f'Unit #{self.unit_num} attacker container does not exist, skipping')
 	
 	def create(self):
 		global attacker_host_tmp_path
@@ -2102,15 +2194,26 @@ class AuthSrvContainer:
 		self.target_domain = 'test{}.qifanzhang.com'.format(self.unit_num)
 		return
 	
+	# def clean(self):
+	# 	subprocess.call('sudo docker stop {auth_srv}'.format(
+	# 		auth_srv = self.container_name
+	# 	), shell=True)
+	# 	subprocess.call('sudo docker container rm {auth_srv}'.format(
+	# 		auth_srv = self.container_name
+	# 	), shell=True)
+	# 	print('Unit #{} old auth_srv cleaned'.format(self.unit_num))
+	# 	return
 	def clean(self):
-		subprocess.call('sudo docker stop {auth_srv}'.format(
-			auth_srv = self.container_name
-		), shell=True)
-		subprocess.call('sudo docker container rm {auth_srv}'.format(
-			auth_srv = self.container_name
-		), shell=True)
-		print('Unit #{} old auth_srv cleaned'.format(self.unit_num))
-		return
+		result = subprocess.run(
+			['sudo', 'docker', 'ps', '-a', '--format', '{{.Names}}'],
+			capture_output=True, text=True
+		)
+		if self.container_name in result.stdout.splitlines():
+			subprocess.run(['sudo', 'docker', 'stop', self.container_name])
+			subprocess.run(['sudo', 'docker', 'rm', self.container_name])
+			print(f'Unit #{self.unit_num} old auth_srv cleaned')
+		else:
+			print(f'Unit #{self.unit_num} auth_srv container does not exist, skipping')
 	
 	def create(self):
 		global auth_srv_tmp_path
