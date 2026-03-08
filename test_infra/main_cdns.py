@@ -131,8 +131,8 @@ class DNSTapContainer:
 
 	## remove the old container
 	def clean(self):
-		subprocess.call('sudo docker stop {}'.format(self.container_name), shell=True)
-		subprocess.call('sudo docker container rm {}'.format(self.container_name), shell=True)
+		subprocess.call(' docker stop {}'.format(self.container_name), shell=True)
+		subprocess.call(' docker container rm {}'.format(self.container_name), shell=True)
 		return
 
 	## create a new one
@@ -199,7 +199,7 @@ class DNSTapContainer:
 		return
 
 	def log_save(self, curr_unit_num, curr_round_num):
-		subprocess.call('cp {dump_folder}/log.dnstap {res_folder}/{unit_num}/{round_num}/dnstap/'.format(
+		subprocess.call('sudo cp {dump_folder}/log.dnstap {res_folder}/{unit_num}/{round_num}/dnstap/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			unit_num = curr_unit_num, 
@@ -210,7 +210,7 @@ class DNSTapContainer:
 		return
 
 	def log_final_save(self):
-		subprocess.call('cp {dump_folder}/log.dnstap {res_folder}/'.format(
+		subprocess.call('sudo cp {dump_folder}/log.dnstap {res_folder}/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder
 		), shell=True)
@@ -262,19 +262,19 @@ class TestUnit:
 	def create_res_folder(self):
 		global dns_sw_name_list
 		
-		subprocess.call('sudo mkdir {res_folder}/{unit_num}/{round_num}'.format(
+		subprocess.call(' mkdir {res_folder}/{unit_num}/{round_num}'.format(
 			res_folder = result_folder_path, 
 			unit_num = self.unit_num, 
 			round_num = self.round_num
 		), shell=True)
 		for curr_dns_sw_name in dns_sw_name_list:
-			subprocess.call('sudo mkdir {res_folder}/{unit_num}/{round_num}/{dns_sw_name}'.format(
+			subprocess.call(' mkdir {res_folder}/{unit_num}/{round_num}/{dns_sw_name}'.format(
 				res_folder = result_folder_path, 
 				unit_num = self.unit_num, 
 				round_num = self.round_num, 
 				dns_sw_name = curr_dns_sw_name
 			), shell=True)
-		subprocess.call('sudo mkdir {res_folder}/{unit_num}/{round_num}/dnstap'.format(
+		subprocess.call(' mkdir {res_folder}/{unit_num}/{round_num}/dnstap'.format(
 			res_folder = result_folder_path, 
 			unit_num = self.unit_num, 
 			round_num = self.round_num
@@ -991,7 +991,7 @@ class Bind9Container:
 		return
 
 	def cache_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/named_dump.db {res_folder}/{round_num}/bind9/'.format(
+		subprocess.call('sudo cp {dump_folder}/named_dump.db {res_folder}/{round_num}/bind9/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -1001,7 +1001,7 @@ class Bind9Container:
 		return
 
 	def log_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/bind.log {res_folder}/{round_num}/bind9/'.format(
+		subprocess.call('sudo cp {dump_folder}/bind.log {res_folder}/{round_num}/bind9/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -1187,7 +1187,7 @@ class UnboundContainer:
 		return
 
 	def cache_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/unbound.cache.db {res_folder}/{round_num}/unbound/'.format(
+		subprocess.call('sudo cp {dump_folder}/unbound.cache.db {res_folder}/{round_num}/unbound/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -1197,12 +1197,12 @@ class UnboundContainer:
 		return
 
 	def log_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/unbound.log {res_folder}/{round_num}/unbound/'.format(
+		subprocess.call('sudo cp {dump_folder}/unbound.log {res_folder}/{round_num}/unbound/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
 		), shell=True)
-		subprocess.call('rm -rf {dump_folder}/unbound.log'.format(dump_folder = self.dump_folder), shell=True)
+		subprocess.call('sudo rm -rf {dump_folder}/unbound.log'.format(dump_folder = self.dump_folder), shell=True)
 		
 		print('='*15, 'Unit #{} unbound log saved and cleaned'.format(self.unit_num), '='*15)
 		return
@@ -1388,7 +1388,7 @@ class PowerDNSContainer:
 		return
 
 	def cache_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/powerdns.cache.db {res_folder}/{round_num}/powerdns/'.format(
+		subprocess.call('sudo cp {dump_folder}/powerdns.cache.db {res_folder}/{round_num}/powerdns/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -1398,12 +1398,12 @@ class PowerDNSContainer:
 		return
 
 	def log_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/powerdns.log {res_folder}/{round_num}/powerdns/'.format(
+		subprocess.call('sudo cp {dump_folder}/powerdns.log {res_folder}/{round_num}/powerdns/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
 		), shell=True)
-		subprocess.call('rm -rf {dump_folder}/powerdns.log'.format(dump_folder = self.dump_folder), shell=True)
+		subprocess.call('sudo rm -rf {dump_folder}/powerdns.log'.format(dump_folder = self.dump_folder), shell=True)
 
 		exit_code, output = self.container.exec_run('pkill pdns')
 		self.start()
@@ -1595,7 +1595,7 @@ class KnotContainer:
 		return
 
 	def log_save(self, curr_round_num):
-		subprocess.call('cp {dump_folder}/knot.log {res_folder}/{round_num}/knot/'.format(
+		subprocess.call('sudo cp {dump_folder}/knot.log {res_folder}/{round_num}/knot/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -1785,7 +1785,7 @@ class MaraDNSContainer:
 
 	def log_save(self, curr_round_num):
 		exit_code, output = self.container.exec_run('pkill Deadwood')
-		subprocess.call('cp {dump_folder}/maradns.log {res_folder}/{round_num}/maradns/'.format(
+		subprocess.call('sudo cp {dump_folder}/maradns.log {res_folder}/{round_num}/maradns/'.format(
 			dump_folder = self.dump_folder, 
 			res_folder = self.res_folder, 
 			round_num = curr_round_num
@@ -2362,7 +2362,7 @@ def clean_res_folder():
 	subprocess.call('sudo rm -rf {res_folder}'.format(
 		res_folder = result_folder_path
 	), shell=True)
-	subprocess.call('sudo mkdir {res_folder}'.format(
+	subprocess.call(' mkdir {res_folder}'.format(
 		res_folder = result_folder_path
 	), shell=True)
 
@@ -2371,7 +2371,7 @@ def clean_res_folder():
 			res_folder = result_folder_path, 
 			unit_num = curr_unit_num
 		), shell=True)
-		subprocess.call('sudo mkdir {res_folder}/{unit_num}/'.format(
+		subprocess.call(' mkdir {res_folder}/{unit_num}/'.format(
 			res_folder = result_folder_path, 
 			unit_num = curr_unit_num
 		), shell=True)
@@ -2389,7 +2389,7 @@ def clean_dump_folder():
 				dump_folder = dump_folder_path, 
 				dns_sw_name = curr_dns_sw_name
 			), shell=True)
-		subprocess.call('sudo mkdir {dump_folder}/{dns_sw_name}/'.format(
+		subprocess.call(' mkdir {dump_folder}/{dns_sw_name}/'.format(
 			dump_folder = dump_folder_path, 
 			dns_sw_name = curr_dns_sw_name
 		), shell=True)
@@ -2400,7 +2400,7 @@ def clean_dump_folder():
 				dns_sw_name = curr_dns_sw_name,
 				unit_num = curr_unit_num
 			), shell=True)
-			subprocess.call('sudo mkdir {dump_folder}/{dns_sw_name}/{unit_num}/'.format(
+			subprocess.call(' mkdir {dump_folder}/{dns_sw_name}/{unit_num}/'.format(
 				dump_folder = dump_folder_path, 
 				dns_sw_name = curr_dns_sw_name, 
 				unit_num = curr_unit_num
