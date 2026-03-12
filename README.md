@@ -1,18 +1,39 @@
-# ResolverFuzz
-<p align="center">
-	<img src="./figs/resolverfuzz_logo.webp" alt="resolverfuzz_logo" width="50%"/>
-</p>	
+# ResolverFuzz Reimplementation
+This repository contains an independent reimplementation and reproduction study of the system proposed in the research paper:
 
-This repository is the official repository for [ResolverFuzz](https://www.usenix.org/conference/usenixsecurity24/presentation/zhang-qifan) published on the 33rd USENIX Security Symposium (USENIX Security 2024). The extended version of this paper is available on [ArXiv](https://arxiv.org/abs/2310.03202). 
+ResolverFuzz: Automated Discovery of DNS Resolver Vulnerabilities with Query-Response Fuzzing
+published at the 33rd USENIX Security Symposium (USENIX Security 2024).
 
-`ResolverFuzz` is a grammar-based blackbox fuzzing tool designed to detect non-crash vulnerabilities in DNS software automatically/semi-automatically via differential analysis among different DNS software. In total, we identified 23 vulnerabilities with 19 confirmed and 15 CVEs assigned. 
+📄 Paper: https://arxiv.org/abs/2310.03202
 
-This artifact has been awarded with [USENIX Badge](https://secartifacts.github.io/usenixsec2024/badges) **Artifacts Available** and **Artifacts Functional** by [USENIX Security 2024 Artifact Evaluation Committee (AEC)](https://www.usenix.org/conference/usenixsecurity24/call-for-artifacts#evaluation-information).
+The goal of this project is to understand grammar-based DNS fuzzing and differential testing techniques used to detect non-crash vulnerabilities in DNS resolver implementations.
 
-<p align="center">   
-  <img src="./figs/usenixbadges-available.png"/>   
-  <img src="./figs/usenixbadges-functional.png"/>  
-</p>
+
+## Disclaimer
+This repository is not the official implementation released by the authors of ResolverFuzz.
+
+It is an independent academic reproduction created for learning and research purposes..
+
+## Project Goals
+
+The objective of this project is to:
+
+- Understand grammar-based fuzzing techniques for network protocols
+- Study DNS resolver behavior across different implementations
+- Implement query–response fuzzing for DNS software
+- Perform differential analysis across multiple DNS resolvers
+- Detect anomalous responses that may indicate vulnerabilities
+
+## System Architecture
+
+ResolverFuzz follows a query–response fuzzing workflow:
+
+1. Grammar-based DNS query generation
+2. Sending queries to multiple DNS resolvers
+3. Capturing resolver responses
+4. Performing differential analysis across implementations
+5. Clustering abnormal responses to identify potential vulnerabilities
+
 
 # Cite `ResolverFuzz`
 
@@ -146,6 +167,17 @@ See [README.md](./test_infra/README.md) for instructions.
 
 See [README.md](./data_process/README.md) for instructions.
 
+## Learning Outcomes
+
+Through this project, the following concepts were explored:
+
+- DNS protocol internals
+- Grammar-based fuzzing
+- Black-box vulnerability detection
+- Differential testing
+- Network traffic monitoring
+- Docker-based testing environments
+
 # Related Documents
 
 - [Pre-published paper](https://www.usenix.org/system/files/sec23winter-prepub-246-zhang-qifan.pdf)
@@ -153,7 +185,5 @@ See [README.md](./data_process/README.md) for instructions.
 - [Poster](https://qifanz.com/posters/ndss24-poster-ResolverFuzz.pdf) presented on NDSS 2024
 - [Artifact Appendix](./docs/ResolverFuzz_AE.pdf)
 
-# License
-
-The artifacts of ResolverFuzz, including this repository, are licensed under the MIT license. See [LICENSE](https://github.com/ResolverFuzz/ResolverFuzz/blob/main/LICENSE) for details.
+.
 
